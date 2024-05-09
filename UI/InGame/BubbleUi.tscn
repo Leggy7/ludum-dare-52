@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://bkfqml80npc2h"]
+
+[ext_resource type="Theme" uid="uid://dgtpcdedfd6qe" path="res://Map/Interactables/BubbleTheme.tres" id="1"]
+[ext_resource type="Script" path="res://UI/InGame/BubbleUiController.cs" id="2"]
+[ext_resource type="Texture2D" uid="uid://p76fdunmcigw" path="res://UI/Icons/e_keyboard.png" id="3"]
+
+[node name="BubbleUi" type="Panel"]
+offset_left = -13.0
+offset_top = -10.0
+offset_right = -5.0
+offset_bottom = -2.0
+theme = ExtResource("1")
+script = ExtResource("2")
+
+[node name="Label" type="TextureRect" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_right = 4.0
+offset_bottom = 4.0
+texture = ExtResource("3")
+expand_mode = 1

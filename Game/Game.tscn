@@ -1,0 +1,72 @@
+[gd_scene load_steps=19 format=3 uid="uid://dkrbglpaya3pb"]
+
+[ext_resource type="PackedScene" uid="uid://cjg3kf3prft8r" path="res://Map/Levels/Level4.tscn" id="1"]
+[ext_resource type="Script" path="res://Game/GameController.cs" id="3"]
+[ext_resource type="PackedScene" uid="uid://c6x610op53nda" path="res://Player/Player.tscn" id="4"]
+[ext_resource type="PackedScene" uid="uid://cgpsxskviw52t" path="res://Game/Camera/GameCamera.tscn" id="5"]
+[ext_resource type="PackedScene" uid="uid://dp82mlestk6rg" path="res://UI/InGame/HarvestInfo.tscn" id="7"]
+[ext_resource type="AudioStream" uid="uid://dkfccp4drhj45" path="res://Game/lose.wav" id="8"]
+[ext_resource type="AudioStream" uid="uid://bwusffw7xpg7o" path="res://Map/Music/background_music_1.wav" id="9"]
+[ext_resource type="PackedScene" uid="uid://dmqfaqapujra1" path="res://Map/Levels/Level1.tscn" id="10"]
+[ext_resource type="Script" path="res://Game/Camera/GameCamera.cs" id="10_du0h8"]
+[ext_resource type="PackedScene" uid="uid://bt5dyikb4tiqj" path="res://UI/MainMenu/MainMenuScene.tscn" id="11"]
+[ext_resource type="PackedScene" path="res://UI/EndSceneMenu/EndScene.tscn" id="12"]
+[ext_resource type="AudioStream" uid="uid://dqlotfsonead" path="res://Game/level_completed.wav" id="13"]
+[ext_resource type="PackedScene" uid="uid://dliqctkvnjs8n" path="res://Map/Levels/Level2.tscn" id="14"]
+[ext_resource type="Script" path="res://Game/Fader.cs" id="14_ofwot"]
+[ext_resource type="PackedScene" uid="uid://bmu0cpftrck7s" path="res://Map/Levels/Level0.tscn" id="15"]
+[ext_resource type="PackedScene" uid="uid://b8luecs8fjcb" path="res://Map/Levels/Level3.tscn" id="16"]
+[ext_resource type="PackedScene" uid="uid://dwlovpx1krmqc" path="res://Map/Levels/Level5.tscn" id="17"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mjjwn"]
+bg_color = Color(1, 1, 1, 1)
+
+[node name="Game" type="Node2D" node_paths=PackedStringArray("_camera", "_inGameUiController", "_fader", "_mainMenuController", "_endSceneController", "_loseAudioPlayer", "_nextLevelAudioPlayer")]
+script = ExtResource("3")
+_playerTemplate = ExtResource("4")
+_previewTime = 2.0
+_levels = [ExtResource("15"), ExtResource("10"), ExtResource("14"), ExtResource("16"), ExtResource("1"), ExtResource("17")]
+_camera = NodePath("GameCamera")
+_inGameUiController = NodePath("HarvestInfo")
+_fader = NodePath("HarvestInfo/Fader")
+_mainMenuController = NodePath("HarvestInfo/MainMenu")
+_endSceneController = NodePath("HarvestInfo/EndScene")
+_loseAudioPlayer = NodePath("LoseAudioPlayer")
+_nextLevelAudioPlayer = NodePath("NextAudioPlayer")
+
+[node name="GameCamera" parent="." instance=ExtResource("5")]
+rotation = 3.14159
+scale = Vector2(1, -1)
+script = ExtResource("10_du0h8")
+
+[node name="HarvestInfo" parent="." instance=ExtResource("7")]
+
+[node name="MainMenu" parent="HarvestInfo" instance=ExtResource("11")]
+
+[node name="EndScene" parent="HarvestInfo" instance=ExtResource("12")]
+visible = false
+
+[node name="Fader" type="Panel" parent="HarvestInfo"]
+visible = false
+modulate = Color(0, 0, 0, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_mjjwn")
+script = ExtResource("14_ofwot")
+_transitionTime = 0.5
+
+[node name="BackgroundAudioPlayer" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("9")
+autoplay = true
+
+[node name="LoseAudioPlayer" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("8")
+
+[node name="NextAudioPlayer" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("13")

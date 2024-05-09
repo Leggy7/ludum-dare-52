@@ -1,0 +1,61 @@
+[gd_scene load_steps=7 format=3 uid="uid://dp82mlestk6rg"]
+
+[ext_resource type="Texture2D" uid="uid://dapasgmgqkhrx" path="res://Map/Interactables/flower_red_only_flower.png" id="1"]
+[ext_resource type="Script" path="res://UI/InGame/HarvestInfoUiController.cs" id="2"]
+[ext_resource type="Theme" uid="uid://bub87vi21olk0" path="res://UI/InGame/InGameUiTheme.tres" id="3"]
+[ext_resource type="Script" path="res://UI/InGame/InGameUiController.cs" id="4"]
+[ext_resource type="Texture2D" uid="uid://dixgcjw0gp6xq" path="res://UI/Icons/cogwheel.png" id="5"]
+[ext_resource type="PackedScene" path="res://UI/InGame/SoundSettings.tscn" id="6"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource("4")
+_harvestInfoNodePath = NodePath("HarvestInfo")
+_cogwheelNodePath = NodePath("HarvestInfo/Cogwheel")
+_settingsScene = ExtResource("6")
+
+[node name="HarvestInfo" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -1024.0
+offset_right = -1024.0
+grow_horizontal = 0
+theme = ExtResource("3")
+script = ExtResource("2")
+_goalLabelNodePath = NodePath("Label")
+_max = 3
+
+[node name="TextureRect" type="TextureRect" parent="HarvestInfo"]
+texture_filter = 1
+layout_mode = 0
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 850.0
+offset_top = 21.0
+offset_right = 914.0
+offset_bottom = 85.0
+texture = ExtResource("1")
+stretch_mode = 6
+
+[node name="Cogwheel" type="Button" parent="HarvestInfo"]
+process_mode = 3
+texture_filter = 1
+layout_mode = 0
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 16.0
+offset_top = 17.0
+offset_right = 80.0
+offset_bottom = 81.0
+icon = ExtResource("5")
+
+[node name="Label" type="Label" parent="HarvestInfo"]
+layout_mode = 0
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 931.0
+offset_top = 17.0
+offset_right = 1019.0
+offset_bottom = 80.0
+text = "0/2"

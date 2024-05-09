@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://d1lwqsmbhjuq2"]
+
+[ext_resource type="Texture2D" uid="uid://bd1pqjpjne0tb" path="res://Map/Interactables/flower_red.png" id="1"]
+[ext_resource type="Script" path="res://Map/Interactables/CollectibleController.cs" id="2"]
+[ext_resource type="PackedScene" uid="uid://bkfqml80npc2h" path="res://UI/InGame/BubbleUi.tscn" id="3"]
+[ext_resource type="Texture2D" uid="uid://cpxggmfhp71rq" path="res://Map/Interactables/flower_red_only_stick.png" id="4"]
+
+[sub_resource type="CircleShape2D" id="1"]
+
+[sub_resource type="CircleShape2D" id="2"]
+radius = 4.0
+
+[node name="Collectible" type="Area2D"]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("2")
+_spriteNodePath = NodePath("Sprite2D")
+_hintNodePath = NodePath("Node2D/BubbleUi")
+_collectedTexture = ExtResource("4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("1")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("2")
+
+[node name="Node2D" type="Node2D" parent="."]
+z_index = 10
+
+[node name="BubbleUi" parent="Node2D" instance=ExtResource("3")]
+offset_left = -9.0
+offset_top = -6.0
+offset_right = -1.0
+offset_bottom = 2.0

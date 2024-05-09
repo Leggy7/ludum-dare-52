@@ -1,0 +1,110 @@
+[gd_scene load_steps=10 format=3 uid="uid://iyrrl1fppn5b"]
+
+[ext_resource type="Script" path="res://TrapdoorController.cs" id="1"]
+[ext_resource type="Texture2D" uid="uid://c8404w3rah5hr" path="res://Threats/Trapdoor/trapdoor_background.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://bgxadpmgbvru0" path="res://Threats/Trapdoor/trapdoor_surface_spritesheet.png" id="3"]
+[ext_resource type="Texture2D" uid="uid://ck28s1x0xihjg" path="res://Threats/Trapdoor/trapdoor_spikes_spritesheet.png" id="4"]
+[ext_resource type="AudioStream" uid="uid://c8kwhrfcjdi30" path="res://Threats/Trapdoor/spikes_triggering.wav" id="5"]
+
+[sub_resource type="Animation" id="1"]
+resource_name = "trigger"
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Surface:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Spikes:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.15, 0.3, 0.45, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("..")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.6),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"ApplyEffect"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dwqvt"]
+_data = {
+"trigger": SubResource("1")
+}
+
+[sub_resource type="CircleShape2D" id="2"]
+radius = 15.0
+
+[sub_resource type="RectangleShape2D" id="3"]
+size = Vector2(8, 8)
+
+[node name="Trapdoor" type="Node2D"]
+script = ExtResource("1")
+_rechargeTime = 0.5
+_animatorPath = NodePath("Sprites/AnimationPlayer")
+_perceptionAreaNodePath = NodePath("PerceptionArea")
+_effectAreaNodePath = NodePath("EffectArea")
+_audioPlayerNodePath = NodePath("AudioStreamPlayer2D")
+
+[node name="Sprites" type="Node2D" parent="."]
+
+[node name="Background" type="Sprite2D" parent="Sprites"]
+modulate = Color(0.329412, 0.258824, 0.0901961, 1)
+texture_filter = 1
+texture = ExtResource("2")
+
+[node name="Spikes" type="Sprite2D" parent="Sprites"]
+modulate = Color(0.533333, 0.533333, 0.533333, 1)
+texture_filter = 1
+texture = ExtResource("4")
+hframes = 4
+
+[node name="Surface" type="Sprite2D" parent="Sprites"]
+modulate = Color(0.384314, 0.541176, 0.380392, 1)
+texture_filter = 1
+scale = Vector2(0.997876, 1)
+texture = ExtResource("3")
+hframes = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprites"]
+libraries = {
+"": SubResource("AnimationLibrary_dwqvt")
+}
+
+[node name="PerceptionArea" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PerceptionArea"]
+shape = SubResource("2")
+
+[node name="EffectArea" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EffectArea"]
+shape = SubResource("3")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5")
